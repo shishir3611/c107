@@ -1,14 +1,11 @@
 import csv
 import pandas as pd
-import plotly.graph_objects as go
+import plotly.express as px
 
 df = pd.read_csv('csv/data.csv')
 
-print(df.groupby('level')['attempt'].mean())
-fig = go.Figure(go.Bar(
-    x = df.groupby('level')['attempt'].mean(),
-    y = ['Level 1', 'Level 2', 'Level 3', 'Level 4'],
-    orientation = 'h'
-))
+mean = df.groupby(['student_id','level'])['attempt'].mean()
+print(mean)
+fig = px.scatter(mean,x = 'student_id',y = 'level', size = 'attempt', color = 'attempt')
 
 fig.show()
